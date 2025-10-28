@@ -65,6 +65,14 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -201,7 +209,7 @@ function App() {
               À Propos
             </a>
             <a href="#services" onClick={() => setIsMobileMenuOpen(false)}>
-              Services
+              Nos Services
             </a>
             <a href="#partenaires" onClick={() => setIsMobileMenuOpen(false)}>
               Partenaires
@@ -230,7 +238,7 @@ function App() {
               À Propos
             </a>
             <a href="#services" onClick={() => setIsMobileMenuOpen(false)}>
-              Services
+              Nos Services
             </a>
             <a href="#partenaires" onClick={() => setIsMobileMenuOpen(false)}>
               Partenaires
@@ -258,8 +266,18 @@ function App() {
             Solutions françaises certifiées depuis 1972
           </p>
           <div className="hero-buttons">
-            <button className="btn btn-primary">Nos Solutions</button>
-            <button className="btn btn-secondary">Contact</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => scrollToSection("services")}
+            >
+              Nos Services
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => scrollToSection("contact")}
+            >
+              Contact
+            </button>
           </div>
         </div>
         <div className="hero-stats">
@@ -507,7 +525,7 @@ function App() {
 
           <div className="footer-links">
             <a href="#about">À Propos</a>
-            <a href="#services">Services</a>
+            <a href="#services">Nos Services</a>
             <a href="#partenaires">Partenaires</a>
             <a href="#contact">Contact</a>
           </div>

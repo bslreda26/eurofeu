@@ -742,7 +742,8 @@ section {
   transition: all 0.3s ease;
   border: 1px solid var(--neutral-200);
   overflow: hidden;
-  height: 500px;
+  min-height: 420px;
+  height: auto;
   display: flex;
   flex-direction: column;
 }
