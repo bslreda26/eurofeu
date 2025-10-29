@@ -27,8 +27,24 @@ import installationImage from "./assets/installation.jpg";
 import verificationImage from "./assets/Vérification Périodique des Matériels.jpg";
 import maintenanceImage from "./assets/Maintenance (Recharge, Réparation et Remplacement).jpg";
 import formationImage from "./assets/Formation Professionnelle.jpg";
-import partenairesImage from "./assets/partenaire.png";
 import heroVideo from "./assets/hero-video.mp4";
+// Partner images
+import partner01 from "./assets/1.jpg";
+import partner02 from "./assets/02.jpg";
+import partner03 from "./assets/03.jpg";
+import partner04 from "./assets/04.jpg";
+import partner05 from "./assets/05.jpg";
+import partner06 from "./assets/06.jpg";
+import partner07 from "./assets/07.jpg";
+import partner08 from "./assets/08.jpg";
+import partner09 from "./assets/09.jpg";
+import partner10 from "./assets/10.jpg";
+import partner11 from "./assets/11.jpg";
+import partner12 from "./assets/12.jpg";
+import partner13 from "./assets/13.jpg";
+import partner14 from "./assets/14.jpg";
+import partner15 from "./assets/15.jpg";
+import partner16 from "./assets/16.jpg";
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -193,6 +209,25 @@ function App() {
         "Elaboration de PIU (Plan d'Intervention d'urgence)",
       ],
     },
+  ];
+
+  const partnerImages = [
+    partner01,
+    partner02,
+    partner03,
+    partner04,
+    partner05,
+    partner06,
+    partner07,
+    partner08,
+    partner09,
+    partner10,
+    partner11,
+    partner12,
+    partner13,
+    partner14,
+    partner15,
+    partner16,
   ];
 
   return (
@@ -388,7 +423,9 @@ function App() {
             <p>L'ensemble des services EUROFEU COTE D'IVOIRE</p>
             <div className="pdf-download">
               <a
-                href="/PRESENTATION EUROFEU CI - S.P 2.0.pdf"
+                href={`${
+                  import.meta.env.BASE_URL
+                }PRESENTATION EUROFEU CI - S.P 2.0.pdf`}
                 download
                 className="pdf-download-btn"
               >
@@ -426,10 +463,14 @@ function App() {
             <p>Des collaborations de confiance pour votre sécurité</p>
           </div>
 
-          <div className="partenaires-content">
-            <div className="partenaires-image">
-              <img src={partenairesImage} alt="Nos Partenaires" />
-            </div>
+          <div className="partenaires-grid">
+            {partnerImages.map((image, index) => (
+              <div key={index} className="partenaire-card">
+                <div className="partenaire-image-wrapper">
+                  <img src={image} alt={`Partenaire ${index + 1}`} />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -10,8 +10,6 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
-
-
   },
   "dependencies": {
     "lucide-react": "^0.548.0",
@@ -36,9 +34,9 @@
   "overrides": {
     "vite": "npm:rolldown-vite@7.1.14"
   },
-  "homepage": "https://eurofeu.github.io/eurofeu-website",
+  "homepage": "https://bslreda26.github.io/eurofeu",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eurofeu/eurofeu-website.git"
+    "url": "https://github.com/bslreda26/eurofeu.git"
   }
 }
