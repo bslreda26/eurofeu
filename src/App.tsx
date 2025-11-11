@@ -7,7 +7,6 @@ import {
   Phone,
   Mail,
   Calendar,
-  TrendingUp,
   Building2,
   Wrench,
   GraduationCap,
@@ -28,8 +27,9 @@ import verificationImage from "./assets/Vérification Périodique des Matériels
 import maintenanceImage from "./assets/Maintenance (Recharge, Réparation et Remplacement).jpg";
 import formationImage from "./assets/Formation Professionnelle.jpg";
 import heroVideo from "./assets/hero-video.mp4";
+import wwImage from "./assets/WW1 (1).jpeg";
+import wwImage2 from "./assets/WW1 (2).jpeg";
 // Partner images
-import partner01 from "./assets/1.jpg";
 import partner02 from "./assets/02.jpg";
 import partner03 from "./assets/03.jpg";
 import partner04 from "./assets/04.jpg";
@@ -48,6 +48,7 @@ import partner16 from "./assets/16.jpg";
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -59,21 +60,42 @@ function App() {
     message: string;
   }>({ type: null, message: "" });
 
+  // Scroll progress indicator
   useEffect(() => {
-    const aboutSection = document.getElementById("about");
-    if (!aboutSection) return;
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight =
+        document.documentElement.scrollHeight - windowHeight;
+      const scrolled = window.scrollY;
+      const progress = (scrolled / documentHeight) * 100;
+      setScrollProgress(progress);
+    };
 
-    const revealElements = aboutSection.querySelectorAll(".reveal");
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Scroll reveal animations for all sections
+  useEffect(() => {
+    const revealElements = document.querySelectorAll(
+      ".reveal, .service-card, .partenaire-card, .feature"
+    );
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("in-view");
+            // Stop observing once animated to improve performance
+            observer.unobserve(entry.target);
           }
         });
       },
-      { root: null, threshold: 0.2 }
+      {
+        root: null,
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px",
+      }
     );
 
     revealElements.forEach((el) => observer.observe(el));
@@ -212,7 +234,6 @@ function App() {
   ];
 
   const partnerImages = [
-    partner01,
     partner02,
     partner03,
     partner04,
@@ -232,6 +253,14 @@ function App() {
 
   return (
     <div className="app">
+      {/* Scroll Progress Bar */}
+      <div className="scroll-progress-container">
+        <div
+          className="scroll-progress-bar"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
       {/* Header */}
       <header className="header">
         <nav className="nav">
@@ -288,7 +317,14 @@ function App() {
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-background">
-          <video autoPlay muted loop playsInline className="hero-bg-video">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="hero-bg-video"
+            preload="auto"
+          >
             <source src={heroVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -331,15 +367,17 @@ function App() {
             <span className="stat-number">100</span>
             <span className="stat-label">Distributeurs</span>
           </div>
-          <div className="stat">
-            <TrendingUp className="stat-icon" />
-            <span className="stat-number">750M+</span>
-            <span className="stat-label">F CFA CA annuel</span>
-          </div>
         </div>
 
         {/* Scroll Indicator */}
       </section>
+
+      {/* Decorative Background Elements */}
+      <div className="bg-decorations">
+        <div className="bg-blob blob-1"></div>
+        <div className="bg-blob blob-2"></div>
+        <div className="bg-blob blob-3"></div>
+      </div>
 
       {/* About Section */}
       <section id="about" className="about">
@@ -386,8 +424,6 @@ function App() {
                       leaders du marché de la sécurité incendie sur le
                       territoire ivoirien avec plus de 1000 clients et environ
                       100 distributeurs et revendeurs à travers le pays.
-                      Aujourd'hui, il enregistre un chiffre d'affaires annuel de
-                      plus de 750 000 000 de F CFA (2018).
                     </p>
                   </div>
                 </div>
@@ -451,6 +487,68 @@ function App() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Formation Section */}
+      <section id="formation" className="formation-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Nos Formations Réalisées</h2>
+            <p>
+              Des formations professionnelles de qualité pour votre sécurité
+            </p>
+          </div>
+          <div className="formation-content">
+            <div className="formation-text reveal">
+              <h3>Expertise en Formation Professionnelle</h3>
+              <p>
+                Eurofeu Côte d'Ivoire a formé des centaines de professionnels
+                dans les domaines du secourisme et de la sécurité incendie.
+                Notre équipe d'instructeurs certifiés dispense des formations
+                pratiques et théoriques adaptées aux besoins spécifiques de
+                chaque entreprise.
+              </p>
+              <p>
+                Nous avons réalisé de nombreuses formations pour des entreprises
+                de tous secteurs, des institutions publiques et des
+                organisations privées. Nos formations sont reconnues et
+                certifiées, garantissant une compétence professionnelle de haut
+                niveau.
+              </p>
+              <div className="formation-highlights">
+                <div className="formation-highlight reveal">
+                  <GraduationCap className="highlight-icon" />
+                  <div>
+                    <h4>Formations Certifiées</h4>
+                    <p>Programmes reconnus par les autorités compétentes</p>
+                  </div>
+                </div>
+                <div className="formation-highlight reveal">
+                  <Users className="highlight-icon" />
+                  <div>
+                    <h4>Instructeurs Expérimentés</h4>
+                    <p>Équipe de formateurs professionnels et certifiés</p>
+                  </div>
+                </div>
+                <div className="formation-highlight reveal">
+                  <Award className="highlight-icon" />
+                  <div>
+                    <h4>Résultats Garantis</h4>
+                    <p>Formations pratiques avec mise en situation réelle</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="formation-images reveal">
+              <div className="formation-image">
+                <img src={wwImage} alt="Formation professionnelle Eurofeu" />
+              </div>
+              <div className="formation-image">
+                <img src={wwImage2} alt="Formation professionnelle Eurofeu" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
