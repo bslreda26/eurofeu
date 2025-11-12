@@ -45,10 +45,12 @@ import partner13 from "./assets/13.jpg";
 import partner14 from "./assets/14.jpg";
 import partner15 from "./assets/15.jpg";
 import partner16 from "./assets/16.jpg";
+import pdfFile from "./pdf.pdf";
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -160,6 +162,16 @@ function App() {
       });
       setSubmitStatus({ type: null, message: "" });
     }, 3000);
+  };
+
+  const handleDownloadPdf = () => {
+    // Create a temporary anchor element to trigger download
+    const link = document.createElement("a");
+    link.href = pdfFile;
+    link.download = "pdf.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const services = [
@@ -317,13 +329,21 @@ function App() {
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-background">
+          {/* Gradient background placeholder - shows immediately */}
+          <div
+            className={`hero-gradient-bg ${isVideoLoaded ? "fade-out" : ""}`}
+          ></div>
+
+          {/* Video - fades in when loaded */}
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="hero-bg-video"
+            className={`hero-bg-video ${isVideoLoaded ? "fade-in" : ""}`}
             preload="auto"
+            onLoadedData={() => setIsVideoLoaded(true)}
+            onCanPlay={() => setIsVideoLoaded(true)}
           >
             <source src={heroVideo} type="video/mp4" />
             Your browser does not support the video tag.
@@ -458,16 +478,10 @@ function App() {
             <h2>Nos Services Complets</h2>
             <p>L'ensemble des services EUROFEU COTE D'IVOIRE</p>
             <div className="pdf-download">
-              <a
-                href={`${
-                  import.meta.env.BASE_URL
-                }PRESENTATION EUROFEU CI - S.P 2.0.pdf`}
-                download
-                className="pdf-download-btn"
-              >
+              <button onClick={handleDownloadPdf} className="pdf-download-btn">
                 <Download className="download-icon" />
                 <span>Télécharger notre brochure complète</span>
-              </a>
+              </button>
             </div>
           </div>
 
